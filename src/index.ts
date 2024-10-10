@@ -74,3 +74,15 @@ app.delete('/products/:id', async (req, res) => {
   await prisma.product.delete({ where: { id: Number(id) } });
   res.json({ message: 'Product deleted' });
 });
+
+app.post('/orders', async (req, res) => {
+  const { userId, products, quantity } = req.body;
+  const order = await prisma.order.create({
+    data: {
+      userId,
+      products,
+      quantity,
+    },
+  });
+  res.json(order);
+});
